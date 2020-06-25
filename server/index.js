@@ -55,7 +55,6 @@ io.on("connection", (socket) => {
         users: getUsersInRoom(user.room),
       });
     }
-    console.log("user left");
   });
 });
 
