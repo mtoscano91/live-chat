@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import InfoBar from "../InfoBar/InfoBar";
 import Input from "../Input/Input";
 import Messages from "../Messages/Messages";
+import TextContainer from "../TextContainer/TextContainer";
 import "./Chat.css";
 
 let socket;
@@ -13,14 +14,19 @@ export default function Chat({ location }) {
   const [room, setRoom] = useState("");
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const [users, setUsers] = useState([]);
   const ENDPOINT = "localhost:5000";
+
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
     socket = io(ENDPOINT);
     setName(name);
     setRoom(room);
     socket.emit("join", { name, room }, (error) => {
-      if (error) alert(error);
+      if (error) {
+        alert(error);
+        window.location.href = "/";
+      }
     });
 
     return () => {
@@ -32,6 +38,9 @@ export default function Chat({ location }) {
   useEffect(() => {
     socket.on("message", (message) => {
       setMessages([...messages, message]);
+    });
+    socket.on("dataRoom", ({ users }) => {
+      setUsers(users);
     });
   }, [messages]);
 
@@ -53,6 +62,7 @@ export default function Chat({ location }) {
           sendMessage={sendMessage}
         />
       </div>
+      <TextContainer users={users} />
     </div>
   );
 }

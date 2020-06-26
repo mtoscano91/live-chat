@@ -1,0 +1,49 @@
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+  color: black;
+  height: 60%;
+  background-color: white;
+  border-radius: 4px 4px 0 0;
+  flex: 0 1 auto;
+}
+
+.textContainer h3 {
+  margin: 0;
+  padding: 20px;
+  border-radius: 4px 4px 0 0;
+  height: 60px;
+  width: 100%;
+  background: #2979ff;
+  color: white;
+}
+.activeContainer {
+  flex: 1;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-content: stretch;
+  flex-wrap: wrap;
+  max-height: 75%;
+}
+
+.activeItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 5vh;
+  margin-left: 5px;
+  max-width: 45%;
+}
+
+.activeContainer img {
+  padding: 0;
+}
+
+@media (min-width: 320px) and (max-width: 1200px) {
+  .textContainer {
+    display: none;
+  }
+}

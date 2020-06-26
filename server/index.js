@@ -20,11 +20,17 @@ io.on("connection", (socket) => {
 
     socket.emit("message", {
       user: "admin",
-      text: `${user.name}, welcome to room ${user.room}`,
+      text: `${
+        user.name.charAt(0).toUpperCase() + user.name.slice(1)
+      }, welcome to room ${
+        user.room.charAt(0).toUpperCase() + user.room.slice(1)
+      }`,
     });
     socket.broadcast.to(user.room).emit("message", {
       user: "admin",
-      text: `User ${user.name} joined the room ${user.room}`,
+      text: `${
+        user.name.charAt(0).toUpperCase() + user.name.slice(1)
+      } joined room ${user.room.charAt(0).toUpperCase() + user.room.slice(1)}`,
     });
     socket.join(user.room);
 
