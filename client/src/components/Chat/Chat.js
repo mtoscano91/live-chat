@@ -15,11 +15,13 @@ export default function Chat({ location }) {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [users, setUsers] = useState([]);
-  const ENDPOINT = "localhost:5000";
+  //const ENDPOINT = "localhost:5000";
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
-    socket = io(ENDPOINT);
+    socket = io();
+    //socket = io(ENDPOINT);
+    console.log(socket);
     setName(name);
     setRoom(room);
     socket.emit("join", { name, room }, (error) => {
@@ -33,7 +35,8 @@ export default function Chat({ location }) {
       socket.emit("disconnect");
       socket.off();
     };
-  }, [ENDPOINT, location.search]);
+    //}, [ENDPOINT, location.search]);
+  }, [location.search]);
 
   useEffect(() => {
     socket.on("message", (message) => {
