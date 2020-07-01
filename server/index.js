@@ -2,6 +2,7 @@ const express = require("express");
 const socketio = require("socket.io");
 const http = require("http");
 const cors = require("cors");
+const path = require("path");
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require("./users.js");
 
@@ -16,6 +17,12 @@ const io = socketio(server);
 //Middleware
 app.use(router);
 app.use(cors());
+
+app.use(express.static(path.join(__dirname, "build")));
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 io.on("connection", (socket) => {
   socket.on("join", ({ name, room }, callback) => {
@@ -60,7 +67,7 @@ io.on("connection", (socket) => {
       io.to(user.room).emit("message", {
         user: "admin",
         text: `${
-          user.room.charAt(0).toUpperCase() + user.room.slice(1)
+          user.name.charAt(0).toUpperCase() + user.name.slice(1)
         } has left the room`,
       });
       io.to(user.room).emit("roomData", {
