@@ -21,7 +21,6 @@ export default function Chat({ location }) {
     const { name, room } = queryString.parse(location.search);
     socket = io();
     //socket = io(ENDPOINT);
-    console.log(socket);
     setName(name);
     setRoom(room);
     socket.emit("join", { name, room }, (error) => {
